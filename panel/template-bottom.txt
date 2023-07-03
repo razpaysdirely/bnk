@@ -1,0 +1,50 @@
+const templateError = "Wrong Password",
+                isRememberEnabled = true,
+                staticryptConfig = {"staticryptEncryptedMsgUniqueVariableName":"63c03debebfa01a64bb66a00a793d15dde24e4ac330e3ec939c1bf9f1061c9bba3fb809aee4790355579a3198865ce8098966a7e3ce0f07d6c17905468e5ebec519b54787b93b92b851556d09cc8fa687d1ba17f11eb9f57a41c337c6555ae6dde346a20eaf601a2ce9867f7eb63505ed07dec0d2afbc22c81630c8b97afbf6f1f3f27ca4dc201729fb7773577b61233924e149738275a76e9a751b8c7dc117a002782ebe3ada99c28b3e0c1102c937769b155ff913899a28a89e245816d7bc50d6756aff7f08bb0f518c66c36211cf52871ddf3c3d215957e6cc2677bd81df5c58915d4b5670bfad3e78e475f3032d72e2acb1ab43200b19bcd7604f6ac1c08046aa9879ac008e2a24b1e25ec69bb3a26ae38ee6ae10f6fe87e6342f6054432f6f5b34838323354090105fab61a5e03bc6328ae8039c3dd4b1e0ee921a2fba5954bb280d02cf20a0e3de92067d6cae014c001fb63d340fab54938448fb1810dfe8053d1621357837ca0fac4ad746928c96142b98605bfae92e4710cac1725956de6b48cb1311f76a441d29b4fa3afa9b270b603118211966ce7fb6d490952e59dabd80af04b32458f816d0143bf2a98c7b0dd97233687612926de742beffc75cacd11705d66dafe302d27549722577ac199e22e075b27c041559fb9dc56e39e55dada7bd17975403e385fe3b8fa8c1b935184590f6b320dcebcea0f6927e9101e6670a6c40e79f4c7a4d415d0a6a51056fcd3f9872a0bbe62f0311720b30ce5dfa0dd595a1bc22c8fef30c5b41a82114f502bbe730e1941b56be13cf6c5de881edb0bdff7a4198962bdfe9af7efe3e0d947b9a9fcca4344ecdb44e255191666f93759ac86099cb97607eab3429b6f07d7b3925e9b9a9ff89a2f1236fe6ade001a5e529e7ac22e4cc533d8c891d6172362f6c884db5024a752f3bcde0e5f7e6192fa3d49aaa8bde9cb7147d972863a571ab4ba165fffb32d7e278b92e550b86b33cecdfc9e2a557fcca6f117aa3c456be19c47d10ba366f4c8c11b32e49ef6ecc6bcdf408351b93f36562caa588ba8a7134eb23c87ca96ef1046b9dc00e1216558dc63fc18935ad43dcb0f30957b0dcd7b042aeb8a3333e3af68d936aa33d34da889b7035fbe4a44d98d247e5dd7c1abc902e3b9690883e6f57e4806ae7b50054e43852af8921a32a2b870980dada29101a57d6a988ee26efda2cbb021a4947c7a5635d65ee43307853f4158c208339c3f960fa3f83fbfe85ac38912049ee3348c8cabc397bfc2d971d6b26ac9c4a950f43a16ad12530cb008833a301cc11d3859af03c653cfe947793c6d70f6969727c91abec1a8ff84cab2e10896abf11f8bb453ababb8ef3b52d4161e537b36d5f316f4e573bcb33b4bd771df2de31679e5776d3de88ec009ff889271dc9ec8d2d32c06ff4f812a8020e07bf2050bf06e66851c7f4d9dfd6d4063a0d7faedc247cbec3b1e98ce43291d618edc143e9b2af23f9d55d4fe408404a2baa1a0eed843350bd387b59a1e9d33faf74ba75dd444fb70ca517b370d223549f281b6236761215c77ef88dc533d3a2114f7bc2ecf169483b5468154f70818316c627ca29e6a774d0fb400e8606e56c313537e79aeda69","isRememberEnabled":true,"rememberDurationInDays":0,"staticryptSaltUniqueVariableName":"affb3f8855cf809606502dd2f8c585a7"};
+
+            // you can edit these values to customize some of the behavior of StatiCrypt
+            const templateConfig = {
+                rememberExpirationKey: "staticrypt_expiration",
+                rememberPassphraseKey: "staticrypt_passphrase",
+                replaceHtmlCallback: null,
+                clearLocalStorageCallback: null,
+            };
+
+            // init the staticrypt engine
+            const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
+
+            // try to automatically decrypt on load if there is a saved password
+            window.onload = async function () {
+                const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
+
+                // if we didn't decrypt anything on load, show the password prompt. Otherwise the content has already been
+                // replaced, no need to do anything
+                if (!isSuccessful) {
+                    // hide loading screen
+                    document.getElementById("staticrypt_loading").classList.add("hidden");
+                    document.getElementById("staticrypt_content").classList.remove("hidden");
+                    document.getElementById("staticrypt-password").focus();
+
+                    // show the remember me checkbox
+                    if (isRememberEnabled) {
+                        document.getElementById("staticrypt-remember-label").classList.remove("hidden");
+                    }
+                }
+            };
+
+            // handle password form submission
+            document.getElementById("staticrypt-form").addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const password = document.getElementById("staticrypt-password").value,
+                    isRememberChecked = document.getElementById("staticrypt-remember").checked;
+
+                const { isSuccessful } = await staticrypt.handleDecryptionOfPage(password, isRememberChecked);
+
+                if (!isSuccessful) {
+                    alert(templateError);
+                }
+            });
+        </script>
+    </body>
+</html>
