@@ -1,13 +1,1 @@
--- Title
-
-        <title>Panel - The Red Bank</title>
-
--- Background
-
-            .staticrypt-content {
-                background: red url("https://wallpaperaccess.com/full/185743.jpg") no-repeat fixed center;
-            }
-
--- Title
-
-                        <p class="staticrypt-title">Access Panel</p>
+staticryptConfig =
