@@ -1,0 +1,6 @@
+{
+    "user1": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",  # Hashed password for user1
+    "user2": "2ef7bde608ce5404e97d5f042f95f89f1c232871",  # Hashed password for user2
+    "user3": "9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684",  # Hashed password for user3
+    # Add more username and hashed password pairs as needed
+}
