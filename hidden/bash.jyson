@@ -1,6 +1,5 @@
 {
-    "user1": "57901d91dc9f3209c2f87975849e8ae3e5edc4c8157d9188f3f87e27da99fe63",  # Hashed password for user1
-    "user2": "2ef7bde608ce5404e97d5f042f95f89f1c232871",  # Hashed password for user2
-    "user3": "9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684",  # Hashed password for user3
-    # Add more username and hashed password pairs as needed
+    "user1": "a7931eee14fb881765edae8bc14e76e4",
+    "user2": "2ef7bde608ce5404e97d5f042f95f89f1c232871",
+    "user3": "9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684"
 }
