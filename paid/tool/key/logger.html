@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mirror HTML</title>
+</head>
+<body>
+  <pre id="content"></pre>
+
+  <script>
+    function fetchContent() {
+      // Fetch the content of the text file from a local source
+      fetch('/file/leafklglogs.txt')
+        .then(response => response.text())
+        .then(data => {
+          // Display the content in the pre element
+          const preElement = document.getElementById('content');
+          preElement.textContent = data;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  
+    // Call the fetchContent function when the page loads
+    window.addEventListener('load', fetchContent);
+  </script>
+</body>
+</html>
